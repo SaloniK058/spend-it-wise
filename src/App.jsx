@@ -1,8 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Landing from "./pages/Landing";
+import AuditForm from "./pages/AuditForm";
+
 function App() {
   return (
-    <div>
-      <h1>AI Spend Audit</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Landing/>}/>
+        <Route path="/audit" element={<AuditForm/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
