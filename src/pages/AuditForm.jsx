@@ -1,3 +1,6 @@
+
+import Form from "../components/Form/Form"
+
 function AuditForm() {
     return (
         <div>
@@ -11,6 +14,8 @@ function AuditForm() {
             <input placeholder="Seats" />
             <input placeholder="Team Size" />
             <input placeholder="Use Case" />
+
+            <Form/>
 
             <button>Submit</button>
         </div>
