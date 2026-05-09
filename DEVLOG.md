@@ -120,3 +120,25 @@ src/
 - Persist form state across reloads using localStorage  
 - Start designing audit calculation logic and recommendation rules  
 - Improve styling and responsive layout for the form page
+
+## Day 4 — 2026-05-9
+
+**Hours worked:** 5
+
+**What I did:**
+Built the core form flow for the AI Spend Audit product. Added dynamic tool rows where users can add or remove AI tools from their stack. Implemented controlled inputs for team size, use case, plan, monthly spend, and seats. Added localStorage persistence so unfinished form state survives page refreshes.
+
+Started building the audit engine by creating a centralized `pricingData.js` file containing pricing information for supported AI tools and plans. Created the first version of `auditEngine.js` to generate recommendations and savings calculations based on user inputs. Added initial optimization rules for ChatGPT plans based on seat count and cost efficiency.
+
+Also restructured submit flow to separate temporary form drafts (`auditForm`) from submitted audits (`auditHistory`) to better model real product behavior.
+
+**What I learned:**
+I understood the difference between temporary autosave state and persisted historical records, and why production apps often separate those concerns. I also learned how to structure recommendation engines using default result objects that get modified by matching business rules.
+
+Another useful insight was distinguishing between company-wide `teamSize` and per-tool `seats`, which affects how optimization logic should work.
+
+**Blockers / what I'm stuck on:**
+Still refining how recommendations should scale across multiple AI vendors without creating repetitive hardcoded conditions. Need to improve the audit engine architecture so adding new pricing rules becomes cleaner over time.
+
+**Plan for tomorrow:**
+Finish the first working version of the audit engine with recommendations for multiple AI tools. Build the audit results page showing monthly and annual savings, recommendation reasoning, and per-tool breakdowns. Start integrating React Router navigation between form and results pages.

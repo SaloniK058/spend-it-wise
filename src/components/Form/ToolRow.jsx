@@ -20,7 +20,7 @@ function ToolRow({tool, index, updateTool, removeTool}) {
                 <label >Plan</label>
                 <input type="text" 
                    value={tool.plan}
-                   onChange={(e)=> {updateTool(index, "plan", e.target.value)}} placeholder="e.g. Plus/Pro/Team"/>
+                   onChange={(e)=> {updateTool(index, "plan", e.target.value.toLowerCase())}} placeholder="e.g. Plus/Pro/Team"/>
             </div>
             <div>
                 <label >Monthly Spend 💵</label>

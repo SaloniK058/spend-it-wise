@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import ToolRow from "./ToolRow";
+import { runAudit } from "../../utils/auditEngine";
 
     const INITIAL_STATE = {
         teamSize: "",
@@ -17,11 +18,18 @@ import ToolRow from "./ToolRow";
 function Form() {
     const [formData, setFormData] = useState(INITIAL_STATE);
 
+    // To restore an unfinished form draft is mistakenly refreshed
+    useEffect(()=>{
+        const savedForm = localStorage.getItem('auditForm');
+
+        if (savedForm) setFormData(JSON.parse(savedForm));
+    }, [])
+
+    // To save draft in auditform on every change
     useEffect(()=>{
         localStorage.setItem("auditForm", JSON.stringify(formData))
     }, [formData]);
     
-    // to LocalStorage
 
 
     // TO CHANGE TEAMSIZE AND USECASE
@@ -64,13 +72,25 @@ function Form() {
         e.preventDefault();
         console.log('will navigate to results');
 
+        const auditResults = runAudit(formData);
+
+        const auditRecords = {
+            id: crypto.randomUUID(),
+            formData,
+            auditResults,
+        }
+
         const existingAudits = JSON.parse(localStorage.getItem("auditHistory")) || [];
 
         const updatedAudits = [
-            ...existingAudits, formData
+            ...existingAudits, auditRecords
         ];
 
         localStorage.setItem("auditHistory", JSON.stringify(updatedAudits));
+
+        setFormData(INITIAL_STATE);
+        localStorage.removeItem("auditForm"); // draft clears
+        
     };
     
 
@@ -115,6 +135,9 @@ function Form() {
                 <button type="button" onClick={addTool}>
                     Add Tool
                 </button>
+                <button type="submit">
+            Submit
+        </button>
             </div>
         </form>
     )
