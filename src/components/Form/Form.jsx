@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ToolRow from "./ToolRow";
 import { runAudit } from "../../utils/auditEngine";
+import { useNavigate } from "react-router-dom";
 
     const INITIAL_STATE = {
         teamSize: "",
@@ -17,6 +18,8 @@ import { runAudit } from "../../utils/auditEngine";
 
 function Form() {
     const [formData, setFormData] = useState(INITIAL_STATE);
+    const navigate = useNavigate();
+    const [error, setError] = useState()
 
     // To restore an unfinished form draft is mistakenly refreshed
     useEffect(()=>{
@@ -72,7 +75,26 @@ function Form() {
         e.preventDefault();
         console.log('will navigate to results');
 
+        const hasEmptyTools = formData.tools.some((tool) =>
+        !tool.name ||
+        !tool.plan ||
+        !tool.monthlySpend ||
+        !tool.seats
+    );
+
+    if (
+        !formData.teamSize ||
+        !formData.useCase ||
+        hasEmptyTools
+    ) {
+        setError("Please fill all the fields*")
+        return;
+    }
+
         const auditResults = runAudit(formData);
+
+        setError('')
+        navigate("/results", {state: auditResults})
 
         const auditRecords = {
             id: crypto.randomUUID(),
@@ -95,7 +117,18 @@ function Form() {
     
 
     return (
-        <form onSubmit={handleSubmit}>
+        
+        <form onSubmit={handleSubmit}
+        onKeyDown={(e)=> {
+            if (e.key === "Enter"){
+                e.preventDefault();
+            }
+        }}>
+            { error && (
+      <p className="text-red-500 mb-4">
+         {error}
+      </p>
+   )}
             <div>
                 <label >Team Size</label>
                 <input type="number" 
