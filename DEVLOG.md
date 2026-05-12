@@ -142,3 +142,331 @@ Still refining how recommendations should scale across multiple AI vendors witho
 
 **Plan for tomorrow:**
 Finish the first working version of the audit engine with recommendations for multiple AI tools. Build the audit results page showing monthly and annual savings, recommendation reasoning, and per-tool breakdowns. Start integrating React Router navigation between form and results pages.
+
+evlog — Day 3: Audit Engine Refactor + Test Coverage
+What I Built
+
+Today I focused on improving the core audit engine logic and making the recommendation system more scalable and believable.
+
+Audit Engine Improvements
+Refactored optimization logic into reusable helper functions
+Introduced modular audit rule architecture using:
+shared.js
+chatgptRules.js
+Added more nuanced recommendation reasoning instead of simple downgrade suggestions
+Improved handling for:
+small teams
+enterprise overprovisioning
+overlapping AI coding tools
+cross-tool optimization suggestions
+New Tool Coverage
+
+Expanded audit support and optimization logic for:
+
+ChatGPT
+Cursor
+Copilot
+Claude
+Gemini
+Windsurf
+Recommendation Quality Improvements
+
+Instead of only reducing plans, the engine now:
+
+suggests alternative tools where appropriate
+provides workflow-aware reasoning
+avoids unrealistic savings claims
+prevents negative savings calculations
+Results & Stability
+Added defensive checks for missing pricing data
+Improved results reliability for edge cases
+Ensured savings calculations remain valid
+Testing Setup
+
+Set up automated testing using Vitest.
+
+Added Test Coverage For:
+Enterprise ChatGPT downgrade for small teams
+Negative savings prevention
+Annual savings calculation
+Copilot Individual recommendation for solo developers
+Keeping already-optimal plans unchanged
+Why This Matters
+
+This significantly improves confidence while refactoring logic and prevents accidental regressions as the audit engine grows.
+
+Key Learnings
+Object destructuring makes configuration-heavy functions cleaner and easier to scale
+Modular rule-based architecture is much easier to maintain than one large audit file
+Automated tests are extremely useful for validating business logic quickly during refactors
+
+
+
+# Devlog Day 5 & 6 — Supabase Integration + Shareable Audit Results
+## What I Built Today
+
+Today I transitioned the project from a frontend-only React application into a more complete full-stack SaaS-style product.
+
+The focus areas were:
+
+* Supabase integration
+* cloud persistence
+* shareable audit URLs
+* dynamic result fetching
+* audit history
+* architecture cleanup
+
+---
+
+# Supabase Integration
+
+Integrated Supabase as the backend database for storing completed audits.
+
+Created:
+
+```js
+saveAudit(auditResults)
+```
+
+which:
+
+* receives calculated audit results
+* inserts audit data into the `audits` table
+* returns inserted database row data
+
+## Stored Data
+
+Each audit now stores:
+
+
+{
+   team_size,
+   use_case,
+   tools,
+   recommendations,
+   total_monthly_savings,
+   total_annual_savings
+}
+
+
+## Key Improvement
+
+Previously the app only generated temporary results.
+
+Now audits persist permanently in the database.
+
+---
+
+# Submission Flow Refactor
+
+Refactored the form submission flow into a cleaner production-style architecture.
+
+## Previous Flow
+
+
+Submit Form
+   ↓
+runAudit()
+   ↓
+Navigate to results
+
+
+## New Flow
+
+
+Submit Form
+   ↓
+runAudit()
+   ↓
+saveAudit()
+   ↓
+Supabase stores audit
+   ↓
+Navigate to shareable URL
+
+
+## Changes Made
+
+* Converted `handleSubmit` into async function
+* Used `await saveAudit(auditResults)`
+* Removed temporary test save button
+* Replaced hardcoded save values with real audit engine output
+
+---
+
+# Shareable Audit URLs
+
+Implemented dynamic shareable result URLs.
+
+## New Route
+/results/:id
+Each saved audit now receives a unique database-generated ID.
+Example:
+/results/abc123
+
+This allows audits to:
+
+* survive page refreshes
+* be shared with others
+* behave like real SaaS reports
+---
+
+# Dynamic Result Fetching
+
+Refactored the results page to fetch audits directly from Supabase.
+
+## Previous Architecture
+
+Used:
+useLocation().state
+which only worked immediately after navigation.
+
+## New Architecture
+Used:
+useParams()
+plus Supabase fetching:
+.from("audits")
+.select("*")
+.eq("id", id)
+.single()
+
+This fetches the correct audit using the URL parameter.
+
+## Key Learning
+
+Understood how:
+
+* dynamic routing
+* database querying
+* URL parameters
+* async fetching
+
+work together in full-stack applications.
+
+---
+
+# Results Page Refactor
+
+Merged the temporary Results page and SharedResults page into a single clean architecture.
+
+Updated the page to:
+
+* fetch audits from database
+* render recommendation cards dynamically
+* display monthly and annual savings
+* support direct page refreshes safely
+
+Removed dependency on temporary navigation state.
+
+---
+
+# Local Audit History
+
+Built a local audit history system using LocalStorage.
+
+## 
+createdAt: new Date().toISOString()
+for timestamp tracking.
+
+## History Page Displays
+
+* audit date
+* team size
+* use case
+* monthly savings
+* annual savings
+* recommendation count
+
+## Bug Fix
+
+Handled invalid date issues caused by older LocalStorage records that were missing timestamps.
+
+---
+
+# Architecture Improvements
+
+Today’s work significantly improved overall project architecture.
+
+## Current Flow
+
+User Input
+   ↓
+Controlled Form
+   ↓
+runAudit()
+   ↓
+Recommendation Engine
+   ↓
+saveAudit()
+   ↓
+Supabase Database
+   ↓
+/results/:id
+   ↓
+ResultsPage Fetch
+   ↓
+Recommendation Rendering
+
+---
+
+# Technical Concepts Practiced
+
+## React
+
+* useEffect
+* async functions
+* state-driven rendering
+* reusable components
+* conditional rendering
+
+## React Router
+
+* dynamic routes
+* URL params
+* navigation flows
+
+## Supabase
+
+* inserts
+* fetching records
+* query chaining
+* async database operations
+
+## Persistence
+
+* LocalStorage
+* cloud persistence
+* shareable state
+
+## Architecture
+
+* separation of business logic and persistence
+* reusable audit engine
+* production-style data flow
+
+---
+
+# Biggest Milestone Today
+
+The project evolved from:
+Frontend React prototype
+
+into:
+full-stack SaaS-style application
+
+with:
+
+* persistent backend storage
+* dynamic shareable URLs
+* database-powered result pages
+* scalable architecture
+
+---
+
+# Next Planned Steps
+
+* Email capture
+* UI polish
+* Deployment
+* Mobile responsiveness
+* Final production cleanup

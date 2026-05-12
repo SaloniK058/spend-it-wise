@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import ToolRow from "./ToolRow";
 import { runAudit } from "../../utils/auditEngine";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
 
     const INITIAL_STATE = {
         teamSize: "",
@@ -71,7 +72,7 @@ function Form() {
         }))
     } 
 
-    function handleSubmit(e){
+   async function handleSubmit(e){
         e.preventDefault();
         console.log('will navigate to results');
 
@@ -93,11 +94,16 @@ function Form() {
 
         const auditResults = runAudit(formData);
 
+        const savedAudit = await saveAudit(auditResults);
+
         setError('')
-        navigate("/results", {state: auditResults})
+
+        // navigate("/results", {state: auditResults})
+        navigate(`/results/${savedAudit.id}`)// goes directly to the url
 
         const auditRecords = {
             id: crypto.randomUUID(),
+            createdAt: new Date().toISOString(),
             formData,
             auditResults,
         }
@@ -115,6 +121,47 @@ function Form() {
         
     };
     
+  async function saveAudit(auditResults) {
+
+        // const auditResults = runAudit(formData);
+
+
+        // Supabase stores Real audit calculations
+        const recommendations = auditResults.recommendations;
+
+        const totalMonthlySavings =
+        auditResults.totalMonthlySavings;
+
+        const totalAnnualSavings =
+        auditResults.totalAnnualSavings;
+
+        const { data, error } = await supabase
+            .from("audits")
+            .insert([
+            {
+                team_size: formData.teamSize,
+
+                use_case: formData.useCase,
+
+                tools: formData.tools,
+
+                recommendations,
+
+                total_monthly_savings:
+                totalMonthlySavings,
+
+                total_annual_savings:
+                totalAnnualSavings
+            }
+            ])
+            .select()
+            .single();
+
+        console.log("DATA:", data);
+        console.log("ERROR:", error);
+        return data; // supabase gives data back to us...
+        }
+
 
     return (
         
@@ -169,8 +216,9 @@ function Form() {
                     Add Tool
                 </button>
                 <button type="submit">
-            Submit
-        </button>
+                 Submit
+                </button>
+                
             </div>
         </form>
     )
