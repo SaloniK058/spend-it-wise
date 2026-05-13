@@ -8,7 +8,7 @@ Built as part of the Credex Web Development Intern Assignment 2026.
 
 ## Live Demo
 
-Deployed URL: Coming soon!
+Deployed URL: https://spenditwisee.netlify.app/
 GitHub repo: https://github.com/SaloniK058/spend-it-wise
 
 ---
