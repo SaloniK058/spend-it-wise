@@ -569,3 +569,20 @@ The project has evolved from a frontend-only assignment into a functional full-s
 * and AI-assisted insights.
 
 This was one of the most technically intensive development sessions so far due to backend integration and debugging work.
+
+## Day 7 — 2026-05-13
+
+**Hours worked:** 8
+
+**What I did:**  
+Focused on finalizing the project for submission readiness. Improved overall project structure and completed multiple engineering/documentation requirements. Added and verified automated audit engine tests, configured GitHub Actions CI workflow to run linting and tests automatically on every push, and fixed ESLint issues related to React hook rules.  
+
+Worked on polishing repository documentation by creating and expanding README.md, ARCHITECTURE.md, PRICING_DATA.md, and PROMPTS.md. Added screenshots and improved project presentation for GitHub review.  
+
+Also reviewed the overall audit flow end-to-end including AI summary generation, Supabase integration, transactional email flow, shareable URLs, and localStorage persistence to ensure the core MVP features were stable.
+
+**What I learned:**  
+Learned more about GitHub Actions workflow setup, automated CI pipelines, and how linting rules can impact deployment readiness even when the application works correctly locally. Also improved my understanding of separating deterministic business logic from AI-generated content for better reliability and explainability.
+
+**Blockers / what I'm stuck on:**  
+The biggest challenge today was handling ESLint CI failures related to React hook rules and ensuring the GitHub workflow passed successfully. I also realized documentation quality takes significantly more effort than expected when preparing a project for external review.
