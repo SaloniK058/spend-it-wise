@@ -470,3 +470,102 @@ with:
 * Deployment
 * Mobile responsiveness
 * Final production cleanup
+
+# CredEx / SpendItWise — Development Log (Day 6)
+**Date:** 12 May 2026
+## Overview
+
+Day 6 focused on transforming the project from a frontend prototype into a full-stack SaaS-style application by integrating backend services, persistent storage, and AI-powered functionality.
+
+---
+
+## Work Completed
+
+### 1. Supabase Backend Integration
+
+* Integrated Supabase into the application architecture.
+* Configured database connectivity and project setup.
+* Implemented audit data storage functionality.
+* Added support for fetching stored audits from the database.
+* Built shareable audit URL functionality.
+
+### 2. Database Persistence
+
+* Transitioned from temporary/local-only storage to persistent cloud storage.
+* Implemented audit saving and retrieval workflows.
+* Added lead/email capture and storage support.
+
+### 3. Supabase Edge Functions
+
+* Began backend/serverless implementation using Edge Functions.
+* Created and deployed AI summary endpoint structure.
+* Configured request handling and API flow.
+* Worked with environment variables and secure API key handling.
+
+### 4. AI Summary Feature
+
+* Started implementation of AI-generated audit summaries using OpenAI APIs.
+* Connected frontend requests to Supabase Edge Functions.
+* Structured audit payloads for AI processing.
+* Implemented initial response rendering pipeline.
+
+### 5. Debugging & Issue Resolution
+
+* Investigated and debugged:
+
+  * CORS policy errors
+  * 500 Internal Server errors
+  * Authorization/JWT configuration issues
+  * Supabase deployment inconsistencies
+* Tested API requests using PowerShell and browser debugging tools.
+
+### 6. Frontend Improvements
+
+* Improved async data handling within React components.
+* Refined audit result flow and state management.
+* Enhanced integration between frontend and backend operations.
+
+---
+
+## Technical Concepts Explored
+
+* Supabase database integration
+* Serverless architecture with Edge Functions
+* API request/response lifecycle
+* CORS handling
+* Secure environment variable management
+* OpenAI API integration
+* Persistent cloud storage workflows
+
+---
+
+## Current Project Status
+
+### Completed Features
+
+* Multi-step audit form
+* Savings calculation engine
+* Results dashboard
+* localStorage persistence
+* Supabase database integration
+* Shareable audit links
+* Email/lead capture system
+
+### Features In Progress
+
+* AI summary reliability and stability
+* UI/UX polish
+* Error handling improvements
+
+---
+
+## Key Outcome
+
+The project has evolved from a frontend-only assignment into a functional full-stack web application with:
+
+* cloud persistence,
+* backend logic,
+* shareable reports,
+* and AI-assisted insights.
+
+This was one of the most technically intensive development sessions so far due to backend integration and debugging work.

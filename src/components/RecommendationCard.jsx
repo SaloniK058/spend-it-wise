@@ -13,7 +13,7 @@ export default function RecommendationCard({ recommendation }) {
 
         <div className="bg-white rounded-2xl shadow p-6">
 
-            <div className="flex items-center justify-between mb-5">
+            <div className="borderEmail items-center justify-between mb-5">
 
                 <div>
                     <h2 className="text-2xl font-bold capitalize">
@@ -70,10 +70,10 @@ export default function RecommendationCard({ recommendation }) {
             <div className="border-t pt-4">
 
                 <p className="mb-2">
-                    <span className="font-semibold">
+                    <span className="text-2xl font-bold">
                         Suggested Plan:
                     </span>{" "}
-                    {recommendation.suggestedPlan}
+                    <h1>{recommendation.suggestedPlan}</h1>
                 </p>
 
                 <p className="text-zinc-600">

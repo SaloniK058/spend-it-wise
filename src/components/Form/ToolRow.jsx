@@ -1,10 +1,10 @@
 function ToolRow({tool, index, updateTool, removeTool}) {
     return (
-        <div>
-            <div>
+        <div className="toolRow">
+            <div >
                 <label >Tool</label>
                 <select value={tool.name}
-                 onChange={(e)=> {updateTool(index, "name", e.target.value)}}>
+                 onChange={(e)=> {updateTool(index, "name", e.target.value.toLowerCase())}}>
 
                     <option value="">Select Tool</option>
                     <option value="chatgpt">ChatGPT</option>
@@ -32,7 +32,7 @@ function ToolRow({tool, index, updateTool, removeTool}) {
                 <input type="number" value={tool.seats}
                 onChange={(e)=> {updateTool(index, "seats", e.target.value)}} placeholder="1"/>
             </div>
-            <button type="button" onClick={()=> removeTool(index)}
+            <button className="btn flexToolRow" type="button" onClick={()=> removeTool(index)}
             >Remove</button>
         </div>
     )

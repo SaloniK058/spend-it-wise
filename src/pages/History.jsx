@@ -11,14 +11,14 @@ function History() {
     }, []);
 
     return (
-        <div>
+        <div className="AuditHistory">
             <h1>Audit History</h1>
 
             {audits.length === 0 ? (
                 <p>No audits found.</p>
             ) : (
                 audits.map((audit) => (
-                    <div
+                    <div className="card  "
                         key={audit.id}
                         style={{
                             border: "1px solid gray",

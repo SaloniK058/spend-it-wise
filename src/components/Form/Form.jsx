@@ -187,7 +187,7 @@ function Form() {
                 <label >Primary Use Case</label>
                 <select 
                     value={formData.useCase}
-                    onChange={(e)=> handleChange("useCase", e.target.value)}
+                    onChange={(e)=> handleChange("useCase", e.target.value.toLowerCase())}
                    >
                     <option value="">Select</option>
                     <option value="coding">Coding</option>
@@ -211,14 +211,15 @@ function Form() {
                         />
                     ))
                 }
-
-                <button type="button" onClick={addTool}>
+ 
+                <div className="btnform">
+                <button className="btn" type="button" onClick={addTool}>
                     Add Tool
                 </button>
-                <button type="submit">
+                <button className="btn" type="submit">
                  Submit
                 </button>
-                
+                </div>
             </div>
         </form>
     )

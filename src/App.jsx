@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
        {/* NAVIGATION */}
-      <nav>
+      <nav className="container flexNav">
         <Link to="/">
           Home
         </Link>
@@ -21,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing/>}/>
         <Route path="/audit" element={<AuditForm/>}/>
-        <Route path="/results" element={<ResultsPage/>}/>
+        <Route path="/results" element={<ResultsPage />}/>
         <Route path="/history" element={<History />} />
         <Route
             path="/results/:id"
